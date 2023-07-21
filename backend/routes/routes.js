@@ -12,8 +12,8 @@ async function addTodo(req, res) {
   }
   else {
     const todo = new Todo(newTodo);
-    await todo.save();
-    res.status(200).json({Message: "new todo added to the list"});  
+    const resTodo = await todo.save();
+    res.status(200).json(resTodo);  
   }
 }
 
@@ -26,8 +26,8 @@ async function updateTodo(req, res) {
 
 async function deleteTodo(req, res) {
   const todoId = req.params.id;
-  await Todo.deleteOne({_id: todoId});
-  res.status(200).json({Message: "todo deleted successfully"});
+  const resTodo = await Todo.deleteOne({Message: "todo deleted successfully"});
+  res.status(200).json(resTodo);
 }
 
 module.exports = {
