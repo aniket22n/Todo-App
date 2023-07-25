@@ -1,20 +1,16 @@
 import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { todosAtom } from "../store/todosAtom";
-import {
-  Card,
-  Button,
-  Typography,
-  CardContent,
-  CardActionArea,
-} from "@mui/material";
-import "./PrintTodos.css";
+import { deleteTodoAtom } from "../store/deletAtom";
+import { Card, Button, Typography, CardContent } from "@mui/material";
+import "../style/PrintTodos.css";
 import { Scrollbars } from "react-custom-scrollbars";
 import { BASE_URL } from "../../config";
 
 function PrintTodos() {
   const todos = useRecoilValue(todosAtom);
   const setTodos = useSetRecoilState(todosAtom);
+  const setDeleteTodo = useSetRecoilState(deleteTodoAtom);
 
   function deleteTodo(id) {
     axios.delete(BASE_URL + "/deleteTodo/" + id).then((res) => {
@@ -32,23 +28,35 @@ function PrintTodos() {
       </center>
     );
   }
-  var count = 1;
+
   return (
     <Scrollbars id="scrollbar" autoHeight autoHeightMin={500}>
       <Card className="printTodos-Container">
         <Typography id="title">Tasks</Typography>
-        {todos.map((todo) => {
+
+        {todos.map((todo, index) => {
           return (
             <Card className="todo">
-              <Typography id="count">{count++ + "]"}</Typography>
               <CardContent>
                 <Typography variant="overline" id="task">
+                  {index + 1 + ". "}
                   {todo.task}
                 </Typography>
               </CardContent>
-              <Button id="remove-button" onClick={() => deleteTodo(todo._id)}>
-                ✔
-              </Button>
+
+              <div id="buttons">
+                <Button
+                  id="update-button"
+                  onClick={() =>
+                    setDeleteTodo({ id: todo._id, position: index + 1 })
+                  }
+                >
+                  📝
+                </Button>
+                <Button id="remove-button" onClick={() => deleteTodo(todo._id)}>
+                  ✔
+                </Button>
+              </div>
             </Card>
           );
         })}

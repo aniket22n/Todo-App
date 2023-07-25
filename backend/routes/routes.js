@@ -21,12 +21,13 @@ async function updateTodo(req, res) {
   const todoId = req.params.id;
   const newTodo = req.body;
   await Todo.updateOne({_id: todoId}, newTodo);
-  res.status(200).json({Message: "todo updated successfully"});
+  const todos = await Todo.find({})
+  res.status(200).json(todos);
 }
 
 async function deleteTodo(req, res) {
   const todoId = req.params.id;
-  const resTodo = await Todo.deleteOne({_id: todoId});
+  await Todo.deleteOne({_id: todoId});
   res.status(200).json({Message: "todo deleted successfully"});
 }
 

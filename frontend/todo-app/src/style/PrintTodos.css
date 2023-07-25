@@ -24,17 +24,25 @@
   border-bottom: solid rgb(133, 157, 133);
 }
 
-#count{
-  margin: auto 0 auto 0;
-  font-size: 20px;
-}
-
 #task{
   margin: 0;
   padding: 0;
   width: 400px;
   font-size: large;
   line-height: 1.5;
+}
+
+#buttons {
+  display: flex;
+  gap: 10px;
+}
+#update-button {
+  margin: auto 0 10px auto;
+  height: 50px;
+  width: 70px;
+  font-size: 25px;
+  color: black;
+  background-color: gray;
 }
 
 #remove-button {
