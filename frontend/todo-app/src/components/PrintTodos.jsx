@@ -1,32 +1,59 @@
 import axios from "axios";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { todosAtom } from "./todosAtom";
-import { Button, Card, Typography } from "@mui/material";
+import { todosAtom } from "../store/todosAtom";
+import {
+  Card,
+  Button,
+  Typography,
+  CardContent,
+  CardActionArea,
+} from "@mui/material";
+import "./PrintTodos.css";
+import { Scrollbars } from "react-custom-scrollbars";
+import { BASE_URL } from "../../config";
 
 function PrintTodos() {
   const todos = useRecoilValue(todosAtom);
-  return (
-    <div>
-      {todos.map((todo) => (
-        <PrintTodo task={todo.task} id={todo._id} key={todo._id} />
-      ))}
-    </div>
-  );
-}
-
-function PrintTodo({ task, id }) {
   const setTodos = useSetRecoilState(todosAtom);
 
   function deleteTodo(id) {
-    axios.delete("http://localhost:3000/deleteTodo/" + id).then((res) => {
+    axios.delete(BASE_URL + "/deleteTodo/" + id).then((res) => {
       setTodos((todos) => todos.filter((todo) => todo._id != id));
     });
   }
+  if (todos.length == 0) {
+    return (
+      <center>
+        <div class="lds-facebook">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </center>
+    );
+  }
+  var count = 1;
   return (
-    <div>
-      <Typography>{task}</Typography>
-      <Button onClick={() => deleteTodo(id)}>Remove</Button>
-    </div>
+    <Scrollbars id="scrollbar" autoHeight autoHeightMin={500}>
+      <Card className="printTodos-Container">
+        <Typography id="title">Tasks</Typography>
+        {todos.map((todo) => {
+          return (
+            <Card className="todo">
+              <Typography id="count">{count++ + "]"}</Typography>
+              <CardContent>
+                <Typography variant="overline" id="task">
+                  {todo.task}
+                </Typography>
+              </CardContent>
+              <Button id="remove-button" onClick={() => deleteTodo(todo._id)}>
+                ✔
+              </Button>
+            </Card>
+          );
+        })}
+      </Card>
+    </Scrollbars>
   );
 }
 

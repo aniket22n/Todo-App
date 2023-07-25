@@ -2,7 +2,9 @@ import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import { useState } from "react";
 import { Card, TextField, Button } from "@mui/material";
-import { todosAtom } from "./todosAtom";
+import { todosAtom } from "../store/todosAtom";
+import "./CreateTodo.css";
+import { BASE_URL } from "../../config";
 
 function CreateTodo() {
   const setTodos = useSetRecoilState(todosAtom);
@@ -15,21 +17,23 @@ function CreateTodo() {
   async function addTodo() {
     if (input == "") alert("Hey, your todo is empty!");
     else {
-      const url = "http://localhost:3000/addTodo";
+      const url = BASE_URL + "/addTodo";
       const res = await axios.post(url, { task: input });
       setTodos((old) => [...old, res.data]);
     }
     setInput("");
-    document.getElementById("input").value = "";
+    const inputField = document.getElementById("input");
+    inputField.value = "";
+    inputField.label = "NEW TODO";
   }
 
   return (
-    <div>
+    <Card className="createTodo-Container">
       <TextField id="input" label="NEW TODO" onChange={onChange} />
-      <Button variant="contained" onClick={() => addTodo()}>
+      <Button id="button" variant="contained" onClick={() => addTodo()}>
         Add Todo
       </Button>
-    </div>
+    </Card>
   );
 }
 
