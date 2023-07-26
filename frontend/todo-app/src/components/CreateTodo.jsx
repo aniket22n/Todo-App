@@ -33,7 +33,7 @@ function CreateTodo() {
   }
 
   async function updateTodo(id) {
-    if (input == "") alert("Hey, your todo is empty!");
+    if (input == "") alert("You haven't done any changes!");
     else {
       const url = BASE_URL + "/updateTodo/" + id;
       const todos = await axios.put(url, { task: input });
@@ -42,6 +42,7 @@ function CreateTodo() {
     const inputField = document.getElementById("edit-input");
     inputField.value = "";
     inputField.label = "NEW TODO";
+    setInput("");
     setDeleteTodo({ id: null, position: 0 });
   }
 
