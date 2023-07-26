@@ -1,0 +1,12 @@
+#todo-components {
+  display: grid;
+  grid-template-columns: minmax(500px, 800px);
+  gap: 20px;
+  justify-content: center;
+  
+}
+
+#black {
+  background-color: black;
+  color: white;
+}

@@ -6,11 +6,13 @@ import { Card, Button, Typography, CardContent } from "@mui/material";
 import "../style/PrintTodos.css";
 import { Scrollbars } from "react-custom-scrollbars";
 import { BASE_URL } from "../../config";
+import { colorAtom } from "../store/darkTheme";
 
 function PrintTodos() {
   const todos = useRecoilValue(todosAtom);
   const setTodos = useSetRecoilState(todosAtom);
   const setDeleteTodo = useSetRecoilState(deleteTodoAtom);
+  const color = useRecoilValue(colorAtom);
 
   function deleteTodo(id) {
     axios.delete(BASE_URL + "/deleteTodo/" + id).then((res) => {
@@ -20,7 +22,7 @@ function PrintTodos() {
   if (todos.length == 0) {
     return (
       <center>
-        <div class="lds-facebook">
+        <div className="lds-facebook">
           <div></div>
           <div></div>
           <div></div>
@@ -30,13 +32,19 @@ function PrintTodos() {
   }
 
   return (
-    <Scrollbars id="scrollbar" autoHeight autoHeightMin={500}>
-      <Card className="printTodos-Container">
+    <Scrollbars autoHeight autoHeightMin={500}>
+      <Card
+        className="printTodos-Container"
+        style={{
+          color: color.colour,
+          backgroundColor: color.backgroundColour,
+        }}
+      >
         <Typography id="title">Tasks</Typography>
 
         {todos.map((todo, index) => {
           return (
-            <Card className="todo">
+            <Card className="todo" id="white">
               <CardContent>
                 <Typography variant="overline" id="task">
                   {index + 1 + ". "}

@@ -1,14 +1,16 @@
-import { RecoilRoot } from "recoil";
 import CreateTodo from "./components/CreateTodo";
 import PrintTodos from "./components/PrintTodos";
+import Navbar from "./components/Navbar";
+import "./style/App.css";
 
 function App() {
   return (
     <div id="App">
-      <RecoilRoot>
+      <Navbar />
+      <div id="todo-components">
         <CreateTodo />
         <PrintTodos />
-      </RecoilRoot>
+      </div>
     </div>
   );
 }

@@ -6,11 +6,13 @@ import { todosAtom } from "../store/todosAtom";
 import { deleteTodoAtom } from "../store/deletAtom";
 import "../style/CreateTodo.css";
 import { BASE_URL } from "../../config";
+import { colorAtom } from "../store/darkTheme";
 
 function CreateTodo() {
   const setTodos = useSetRecoilState(todosAtom);
   const deleteTodo = useRecoilValue(deleteTodoAtom);
   const setDeleteTodo = useSetRecoilState(deleteTodoAtom);
+  const color = useRecoilValue(colorAtom);
   const [input, setInput] = useState("");
 
   function onChange(event) {
@@ -46,7 +48,13 @@ function CreateTodo() {
   if (deleteTodo.position != 0) {
     const label = "EDIT TODO NO. " + deleteTodo.position;
     return (
-      <Card className="editTodo-Container">
+      <Card
+        className="editTodo-Container"
+        style={{
+          color: color.colour,
+          backgroundColor: color.backgroundColour,
+        }}
+      >
         <TextField id="edit-input" label={label} onChange={onChange} />
         <Button
           id="edit-button"
@@ -60,7 +68,13 @@ function CreateTodo() {
   }
 
   return (
-    <Card className="createTodo-Container">
+    <Card
+      className="createTodo-Container"
+      style={{
+        color: color.colour,
+        backgroundColor: color.backgroundColour,
+      }}
+    >
       <TextField id="input" label="NEW TODO" onChange={onChange} />
       <Button id="button" variant="contained" onClick={() => addTodo()}>
         Add Todo

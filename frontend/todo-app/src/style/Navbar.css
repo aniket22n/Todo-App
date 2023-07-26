@@ -1,0 +1,9 @@
+#navbar{
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+#nav-button{
+  margin-top: 25px;
+}
